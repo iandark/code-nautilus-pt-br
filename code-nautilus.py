@@ -3,11 +3,8 @@
 # Place me in ~/.local/share/nautilus-python/extensions/,
 # ensure you have python-nautilus package, restart Nautilus, and enjoy :)
 #
-# This script was written by cra0zy and is released to the public domain
+# This script is released to the public domain.
 
-from gi import require_version
-require_version('Gtk', '3.0')
-require_version('Nautilus', '3.0')
 from gi.repository import Nautilus, GObject
 from subprocess import call
 import os
@@ -42,7 +39,8 @@ class VSCodeExtension(GObject.GObject, Nautilus.MenuProvider):
 
         call(VSCODE + ' ' + args + safepaths + '&', shell=True)
 
-    def get_file_items(self, window, files):
+    def get_file_items(self, *args):
+        files = args[-1]
         item = Nautilus.MenuItem(
             name='VSCodeOpen',
             label='Abrir com ' + VSCODENAME,
@@ -52,7 +50,8 @@ class VSCodeExtension(GObject.GObject, Nautilus.MenuProvider):
 
         return [item]
 
-    def get_background_items(self, window, file_):
+    def get_background_items(self, *args):
+        file_ = args[-1]
         item = Nautilus.MenuItem(
             name='VSCodeOpenBackground',
             label='Abrir com ' + VSCODENAME,
